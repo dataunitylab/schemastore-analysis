@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+networkx = "==2.2"
+pydot = "==1.4.1"
+graphviz = "==0.10.1"
+matplotlib = "==3.0.2"
+pandas = "==0.23.4"
+openpyxl = "==2.6.1"
+jsonschema = "==3.0.0a4"
+urllib3 = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
+python_full_version = "3.7.2"
