@@ -7,7 +7,7 @@ Therefore the JSON Schema files available at the [JSON Schema Store](schemastore
 ## Running the Code 
 ### Preliminaries
 To run this code on your device, you have to download or clone this repository. You must have a version of Python 3 installed.
-The project is tested with Python version __Python 3.7.2__. You'll also need to install some packages available with __pip__. The used packages are:
+The project is tested with Python version __Python 3.7.17. You'll also need to install some packages available with __pip__. The used packages are:
 * [Networkx](https://networkx.github.io/) - A package for operations on graphs
 * [PyDot](https://pypi.org/project/pydot/) - A package to operate with DOT-Format used to visualize graphs
 * [Graphviz](https://pypi.org/project/graphviz/) - A package to interact with the Graphviz Framework
