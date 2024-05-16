@@ -1,4 +1,5 @@
 # JSON-Schema-Analysis
+[![CI](https://github.com/dataunitylab/schemastore-analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/dataunitylab/schemastore-analysis/actions/workflows/ci.yml)
 
 ## Description
 __JSON-Schema-Analysis__ is a project to analyse real-world JSON Schema documents towards their usage of components and features allowed by the [JSON Schema standard](https://json-schema.org/latest/json-schema-core.html).  
