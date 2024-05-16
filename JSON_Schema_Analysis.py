@@ -5,7 +5,7 @@
  By calling this file and specifying its command line arguments the analysis process is started
  Usage:
    JSON_Schema_Analysis.py [-v | --verbose] [(-a | --all) | ((-c | --count) <val>)
- 
+
  Args:
    - -v | --verbose        output of analysis results to console
    - -a | --all            analyse all schemas located in directory ./JSON
