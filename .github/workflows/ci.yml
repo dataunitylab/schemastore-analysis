@@ -1,0 +1,33 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  pre_job:
+    name: Check duplicate
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@12aca0a884f6137d619d6a8a09fcc3406ced5281
+        with:
+          cancel_others: true
+          concurrent_skipping: same_content
+          do_not_skip: '["pull_request", "schedule", "workflow_dispatch"]'
+
+  build:
+    name: Test
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.7.2'
+          cache: 'pipenv'
+      - name: Install pipenv
+        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+      - name: Install dependencies
+        run: pipenv install
+      - name: Run tests
+        run: (cd PyTest/; pipenv run pytest)
