@@ -1,22 +1,24 @@
-import sys, pytest
+import pytest, sys
+
 sys.path.append("../")
 sys.path.append("../NodeTypes")
 sys.path.append("../Visitors/")
-from schema_graph import schema_graph
 import json
-import pandas as pd
+
 import networkx as nx
+import pandas as pd
 from Count_String_Visitor import Count_String_Visitor
 from CountReferences_Visitor import CountReferences_Visitor
+from schema_graph import schema_graph
 
 """! @package This file runs the unit test for JSON_Schema_Analysis project
     It loads all test cases with files as input and the expected values per category
     from the Excel Sheet TestDefintions.xlsx
 """
 
-#getting test data from ExcelSheet
+# getting test data from ExcelSheet
 xl = pd.ExcelFile("TestDefinitions.xlsx")
-df = xl.parse('Tests')
+df = xl.parse("Tests")
 xl.close()
 
 ex_depth_list = list()
@@ -43,55 +45,59 @@ for file in df["Filename"]:
     filename_list.append(file)
     i += 1
 
+
 @pytest.mark.parametrize("test_input, expected", ex_depth_list)
-    
 def test_depth(test_input, expected):
     assert depth(test_input) == expected
 
-@pytest.mark.parametrize("test_input, expected", ex_resdepth_list)
 
+@pytest.mark.parametrize("test_input, expected", ex_resdepth_list)
 def test_resolvedDepth(test_input, expected):
     assert resDepth(test_input) == expected
 
-@pytest.mark.parametrize("test_input, expected", ex_has_recursion_list)
 
+@pytest.mark.parametrize("test_input, expected", ex_has_recursion_list)
 def test_recursion(test_input, expected):
     assert recursion(test_input) == expected
 
-@pytest.mark.parametrize("test_input, expected", ex_string_count_list)
 
+@pytest.mark.parametrize("test_input, expected", ex_string_count_list)
 def test_string_count(test_input, expected):
     assert string_count(test_input) == expected
 
-@pytest.mark.parametrize("test_input, expected", ex_fan_in_list)
 
+@pytest.mark.parametrize("test_input, expected", ex_fan_in_list)
 def test_fan_in(test_input, expected):
     assert fan_in(test_input) == expected
 
-@pytest.mark.parametrize("test_input, expected", ex_reachability_list)
 
+@pytest.mark.parametrize("test_input, expected", ex_reachability_list)
 def test_reachability(test_input, expected):
     assert reachability(test_input) == expected
 
-@pytest.mark.parametrize("test_input, expected", ex_ref_count_list)
 
+@pytest.mark.parametrize("test_input, expected", ex_ref_count_list)
 def test_refCount(test_input, expected):
-    assert refCount(test_input) == expected                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    assert refCount(test_input) == expected
+
 
 def depth(filename):
     sg = getSg(filename)
-        
+
     return sg.depth_schema()
+
 
 def resDepth(filename):
     sg = getSg(filename)
     ret_val = sg.depth_resolvedReferenceGraph()
     return ret_val
 
+
 def recursion(filename):
     sg = getSg(filename)
 
     return sg.check_recursion()
+
 
 def string_count(filename):
     sg = getSg(filename)
@@ -100,25 +106,30 @@ def string_count(filename):
 
     return visitor.getCount()
 
+
 def fan_in(filename):
     sg = getSg(filename)
 
     return sg.getMaxFanIn()
+
 
 def reachability(filename):
     sg = getSg(filename)
 
     return sg.check_reachability()
 
+
 def refCount(filename):
     sg = getSg(filename)
 
     return sg.getNoReferences()
 
+
 def origNodes(filename):
     sg = getSg(filename)
 
     return len(list(sg.nodes))
+
 
 def expNodes(filename):
     sg = getSg(filename)
@@ -131,13 +142,14 @@ def expNodes(filename):
 
     return ret_val
 
-def getSg(filename):
-    """! @brief Load Schema Graph from file 
-        @param  filename    Name of the file located in ./TestSchemas directory
 
-        @return schema_graph of the given file
+def getSg(filename):
+    """! @brief Load Schema Graph from file
+    @param  filename    Name of the file located in ./TestSchemas directory
+
+    @return schema_graph of the given file
     """
-    with open("./TestSchemas/"+filename, 'r') as fp:
+    with open("./TestSchemas/" + filename, "r") as fp:
         sg = schema_graph(filename)
         sg.load_schema(json.loads(fp.read()))
 

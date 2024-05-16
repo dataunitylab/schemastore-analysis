@@ -1,8 +1,9 @@
 from SchemaNode import SchemaNode
 
+
 class ArrayNode(SchemaNode):
     """! @brief This class is used to represent JSON Schema arrays as nodes in the schema_graph."""
-    
+
     def __init__(self, name):
         ## Node's name
         self.name = name
@@ -27,5 +28,3 @@ class ArrayNode(SchemaNode):
 
     def setID(self, id):
         self.nodeID = id
-
-

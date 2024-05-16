@@ -1,17 +1,19 @@
 from SchemaNode import SchemaNode
 
+
 class KeyValueNode(SchemaNode):
     """! @brief This class is used to represent Key-Value pairs of JSON Schema Documents as nodes in
-                the schema graph
-        A key-value pair looks as follows in the schema document:
-        @code{.json}
-            "type" : "string"
-        @endcode
+            the schema graph
+    A key-value pair looks as follows in the schema document:
+    @code{.json}
+        "type" : "string"
+    @endcode
     """
+
     def __init__(self, name, value):
         self.name = name
         self.value = value
-        self.nodeID = 0 
+        self.nodeID = 0
 
     def getName(self):
         return self.name
@@ -30,5 +32,3 @@ class KeyValueNode(SchemaNode):
 
     def setID(self, id):
         self.nodeID = id
-
-

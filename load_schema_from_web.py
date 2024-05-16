@@ -1,22 +1,24 @@
-import urllib3 as url
-import json
 import io, os
+import json
+
+import urllib3 as url
+
 
 def load_schema(url_str, logfile):
-    """! @brief This function loads a schema from given web address and returns a JSON schema dictionary representation 
-        
-        The function is capable of returning sub-object of the schema by requesting e.g. http://example.com/#def1
-        
-        @note   For the UnitTest of schema_graph.py, this function can additionaly load two files from local storage
-                when one of the following urls is requested: http://loopback/address or http://loopback/ext
+    """! @brief This function loads a schema from given web address and returns a JSON schema dictionary representation
 
-        @param  url_str  url to download file from
-        @param  logfile file pointer to logfile
+    The function is capable of returning sub-object of the schema by requesting e.g. http://example.com/#def1
 
-        @return Dictionary representation of requested Schema, part of Schema or None if failed
+    @note   For the UnitTest of schema_graph.py, this function can additionaly load two files from local storage
+            when one of the following urls is requested: http://loopback/address or http://loopback/ext
+
+    @param  url_str  url to download file from
+    @param  logfile file pointer to logfile
+
+    @return Dictionary representation of requested Schema, part of Schema or None if failed
     """
     partly_referenced = False
-    valid_json = True 
+    valid_json = True
     schema_url = url_str
     # change working directory to satisfy relative pathes
     old_path = os.getcwd()
@@ -33,15 +35,15 @@ def load_schema(url_str, logfile):
         fp.close()
     else:
         if "#" in schema_url:
-            #A definition or part of the whole file is referenced
+            # A definition or part of the whole file is referenced
             partly_referenced = True
             # extract url part
-            definition_part = schema_url[(schema_url.find("#")+1):]
-            schema_url = schema_url[:(schema_url.find("#"))]
+            definition_part = schema_url[(schema_url.find("#") + 1) :]
+            schema_url = schema_url[: (schema_url.find("#"))]
         # download whole file
-        url.disable_warnings(url.exceptions.InsecureRequestWarning)    
+        url.disable_warnings(url.exceptions.InsecureRequestWarning)
         http = url.PoolManager()
-        schema_raw = http.request('GET', schema_url).data
+        schema_raw = http.request("GET", schema_url).data
     if schema_raw is None:
         logfile.write("Could not load from " + schema_url + "\n")
     else:
@@ -54,7 +56,7 @@ def load_schema(url_str, logfile):
 
                 # step-by-step deeper into dictionaries until right and last one in definition parts is reached
                 for part in definition_list:
-                    if part == '':
+                    if part == "":
                         continue
                     else:
                         schema_json = schema_json[part]
@@ -65,8 +67,8 @@ def load_schema(url_str, logfile):
 
     # restore working directory
     os.chdir(old_path)
-        
-    if valid_json:            
+
+    if valid_json:
         return schema_json
     else:
         return None

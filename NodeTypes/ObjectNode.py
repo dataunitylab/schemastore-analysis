@@ -1,8 +1,9 @@
 from SchemaNode import SchemaNode
 
+
 class ObjectNode(SchemaNode):
-    """! @brief Class to represent objects in JSON Schema Documents as Nodes in the schema graph.
-    """
+    """! @brief Class to represent objects in JSON Schema Documents as Nodes in the schema graph."""
+
     def __init__(self, name):
         self.name = name
         self.nodeID = 0
